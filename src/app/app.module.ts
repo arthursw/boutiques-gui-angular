@@ -53,6 +53,10 @@ import { NotificationsComponent } from './shared/notifications/notifications.com
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { BreadcrumbsService } from './breadcrumbs/breadcrumbs.service';
 import { Router } from './breadcrumbs/router';
+import { ServiceLocator } from './utils/locator.service';
+import { InvocationComponent } from './invocation/invocation.component';
+import { InvocationGuiComponent } from './invocation-gui/invocation-gui.component';
+import { ExecutionComponent } from './execution/execution.component';
 
 @NgModule({
   declarations: [
@@ -87,7 +91,10 @@ import { Router } from './breadcrumbs/router';
     ToggleSwitchComponent,
     CheckboxComponent,
     BreadcrumbsComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    InvocationComponent,
+    InvocationGuiComponent,
+    ExecutionComponent
   ],
   imports: [
     BrowserModule,
@@ -126,4 +133,8 @@ import { Router } from './breadcrumbs/router';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+    constructor(private injector: Injector) {
+        ServiceLocator.injector = injector;
+    }
+}

@@ -65,7 +65,7 @@ export class KeycloakHttpInterceptor implements HttpInterceptor {
     }
 
     private setAuthHeader(req: HttpRequest<any>): HttpRequest<any> {
-        const authHeader = KeycloakService.auth.authz.token;
+        const authHeader = KeycloakService.auth.authz ? KeycloakService.auth.authz.token : null;
         return req.clone({
             setHeaders: {
                 Authorization: `Bearer ${authHeader}`

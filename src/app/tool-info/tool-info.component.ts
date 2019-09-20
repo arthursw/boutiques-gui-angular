@@ -8,7 +8,7 @@ import { ToolInfo } from '../tool.model';
 })
 export class ToolInfoComponent implements OnInit {
 
-	@Input() tool: ToolInfo = null
+  @Input() tool: ToolInfo = null
 
   constructor() { }
 

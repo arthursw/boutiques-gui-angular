@@ -9,16 +9,19 @@ import { ServiceLocator } from './utils/locator.service';
 })
 export class ToolService extends EntityService<ToolInfo> {
 
-  API_URL = 'http://localhost:8080/tool';
+  API_URL = 'http://localhost:9000/tool';
+
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
 
   constructor(private httpClient: HttpClient) {
     super()
-    ToolInfo.prototype.service = ServiceLocator.injector.get(ToolService);
   }
 
   getEntityInstance(entity?: ToolInfo): ToolInfo
   {
-    return new ToolInfo();
+    return new ToolInfo(this);
   }
 
   search(query: string): Promise<ToolInfo[]> {
@@ -51,5 +54,21 @@ export class ToolService extends EntityService<ToolInfo> {
 
   getAll(): Promise<ToolInfo[]> {
     return this.httpClient.get<Array<ToolInfo>>(`${this.API_URL}/all`).toPromise();
+  }
+
+  getDescriptor(toolInfoId: number): Promise<any> {
+    return this.httpClient.get<any>(`${this.API_URL}/${encodeURIComponent(toolInfoId)}/descriptor`).toPromise();
+  }
+
+  getInvocation(toolInfoId: number): Promise<string> {
+    return this.httpClient.get<string>(`${this.API_URL}/${encodeURIComponent(toolInfoId)}/invocation`).toPromise();
+  }
+
+  generateCommand(toolInfoId: number, invocation: string): Promise<string> {
+    return this.httpClient.post<string>(`${this.API_URL}/${encodeURIComponent(toolInfoId)}/generate-command`, { invocation: invocation }, this.httpOptions).toPromise();
+  }
+
+  execute(toolInfoId: number, invocation: string): Promise<string> {
+    return this.httpClient.post<string>(`${this.API_URL}/${encodeURIComponent(toolInfoId)}/execute`, { invocation: invocation }, this.httpOptions).toPromise();
   }
 }

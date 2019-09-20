@@ -13,6 +13,7 @@
  */
 
 import { Entity } from './shared/components/entity/entity.abstract';
+import { EntityService } from './shared/components/entity/entity.abstract.service';
 
 export class ToolInfo extends Entity {
 
@@ -20,6 +21,10 @@ export class ToolInfo extends Entity {
     name: string;
     description: string;
     nDownloads: number;
+    service: EntityService<ToolInfo>
 
-    service: any = null;
+    constructor(service: EntityService<ToolInfo>) {
+    	super()
+    	this.service = service
+    }
 }

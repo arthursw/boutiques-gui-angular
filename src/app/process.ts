@@ -4,7 +4,7 @@ const METADATA = {
     BACKEND_API_STUDIES_MS_URL: 'http://studies:9902' + '/studies',
     BACKEND_API_DATASET_MS_URL: 'http://datasets:9904' + '/datasets',
     BACKEND_API_IMPORT_MS_URL: 'http://import:9903' + '/import',
-    BACKEND_API_BOUTIQUES_MS_URL: 'http://boutiques:9905' + '/boutiques',
+    BACKEND_API_BOUTIQUES_MS_URL: 'http://boutiques:9000' + '/boutiques',
     KEYCLOAK_BASE_URL: 'http://keycloak:8080/auth',
     LOGOUT_REDIRECT_URL: 'http://localhost:4200/shanoir-ng/index.html',
     ENV: 'development',
