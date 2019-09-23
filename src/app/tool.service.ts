@@ -57,18 +57,20 @@ export class ToolService extends EntityService<ToolInfo> {
   }
 
   getDescriptor(toolInfoId: number): Promise<any> {
-    return this.httpClient.get<any>(`${this.API_URL}/${encodeURIComponent(toolInfoId)}/descriptor`).toPromise();
+    return this.httpClient.get<any>(`${this.API_URL}/${encodeURIComponent(toolInfoId)}/descriptor/`).toPromise();
   }
 
   getInvocation(toolInfoId: number): Promise<string> {
-    return this.httpClient.get<string>(`${this.API_URL}/${encodeURIComponent(toolInfoId)}/invocation`).toPromise();
+    return this.httpClient.get<string>(`${this.API_URL}/${encodeURIComponent(toolInfoId)}/invocation/`).toPromise();
   }
 
-  generateCommand(toolInfoId: number, invocation: string): Promise<string> {
-    return this.httpClient.post<string>(`${this.API_URL}/${encodeURIComponent(toolInfoId)}/generate-command`, { invocation: invocation }, this.httpOptions).toPromise();
+  generateCommand(toolInfoId: number, invocation: any): Promise<string> {
+    let httpOptions = Object.assign( { responseType: 'text' }, this.httpOptions);
+    return this.httpClient.post<string>(`${this.API_URL}/${encodeURIComponent(toolInfoId)}/generate-command/`, invocation, httpOptions ).toPromise();
   }
 
-  execute(toolInfoId: number, invocation: string): Promise<string> {
-    return this.httpClient.post<string>(`${this.API_URL}/${encodeURIComponent(toolInfoId)}/execute`, { invocation: invocation }, this.httpOptions).toPromise();
+  execute(toolInfoId: number, invocation: any): Promise<string> {
+    let httpOptions = Object.assign( { responseType: 'text' }, this.httpOptions);
+    return this.httpClient.post<string>(`${this.API_URL}/${encodeURIComponent(toolInfoId)}/execute/`, invocation, httpOptions).toPromise();
   }
 }

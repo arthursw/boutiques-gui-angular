@@ -11,10 +11,11 @@ export class InvocationComponent implements OnInit {
   
   tool: ToolInfo = null
   
-  @Output() invocationChanged = new EventEmitter<string>();
+  @Output() invocationChanged = new EventEmitter<any>();
 
   descriptor: any = null
-  invocation: string = null
+  invocation: any = null
+  invocationChangedTimeoutID: any = null
 
   constructor(private toolService: ToolService) { }
 
@@ -24,17 +25,21 @@ export class InvocationComponent implements OnInit {
   onToolSelected(toolInfo: ToolInfo) {
     this.tool = toolInfo
     this.toolService.getDescriptor(this.tool.id).then((descriptor)=> this.descriptor = descriptor);
-    this.toolService.getInvocation(this.tool.id).then((invocation)=> this.invocation = invocation);
+    this.toolService.getInvocation(this.tool.id).then((invocation)=> {
+      this.invocation = invocation;
+      this.invocationChanged.emit(this.invocation);
+    });
   }
 
   get invocationValue() {
-    return JSON.stringify(this.invocation, null, 2);
+    return this.invocation ? JSON.stringify(this.invocation, null, 2) : '';
   }
 
   set invocationValue(v) {
     try{
       this.invocation = JSON.parse(v);
-      this.invocationChanged.emit(this.invocation);
+      clearTimeout(this.invocationChangedTimeoutID);
+      this.invocationChangedTimeoutID = setTimeout(()=> this.invocationChanged.emit(this.invocation), 1000);
     } catch(e) {
       console.log('error occored while you were typing the JSON');
     };

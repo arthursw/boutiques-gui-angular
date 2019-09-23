@@ -11,7 +11,7 @@ export class ExecutionComponent implements OnInit {
   
   tool: ToolInfo = null
   generatedCommand: string = null
-  invocation: string = null
+  invocation: any = null
   output: string = null
 
   constructor(private toolService: ToolService) { }
@@ -23,8 +23,8 @@ export class ExecutionComponent implements OnInit {
   	this.tool = toolInfo;
   }
 
-  onInvocationChanged(invocation) {
-  	this.invocation = invocation
+  onInvocationChanged(invocation: any) {
+  	this.invocation = invocation;
   	this.toolService.generateCommand(this.tool.id, this.invocation).then((generatedCommand)=> this.generatedCommand = generatedCommand);
   }
 
