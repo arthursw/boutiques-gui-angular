@@ -31,20 +31,6 @@ export class ToolService extends EntityService<ToolInfo> {
       queryParameters = queryParameters.append('query', <any>query);
     }
 
-    // let headers = this.defaultHeaders;
-
-
-    // // to determine the Accept header
-    // let httpHeaderAccepts: string[] = [
-    //     'application/json',
-    //     'application/xml'
-    // ];
-    // const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    // if (httpHeaderAcceptSelected != undefined) {
-    //     headers = headers.set('Accept', httpHeaderAcceptSelected);
-    // }
-
-
     return this.httpClient.get<ToolInfo[]>(`${this.API_URL}/search`,
       {
         params: queryParameters,

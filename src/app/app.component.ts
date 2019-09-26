@@ -14,25 +14,23 @@ import { ToolInfo } from './tool.model';
 export class AppComponent implements AfterViewInit {
 
   @ViewChild(InvocationComponent, {static: false})
-  private invocationComponent: InvocationComponent;
+  invocationComponent: InvocationComponent;
 
   @ViewChild(ExecutionComponent, {static: false})
-  private executionComponent: ExecutionComponent;
+  executionComponent: ExecutionComponent;
 
-  constructor(
-      public viewContainerRef: ViewContainerRef,
-      private modalService: ModalService,
-      private breadcrumbsService: BreadcrumbsService) {
-    
-    this.modalService.rootViewCRef = this.viewContainerRef;
-    ServiceLocator.rootViewContainerRef = this.viewContainerRef;
+  constructor() {
+    console.log("begin AppComponent");
   }
 
   ngAfterViewInit() {
+    console.log("end begin AppComponent");
   }
 
   onToolSelected(toolInfo: ToolInfo) {
+    console.log("begin onToolSelected");
     this.invocationComponent.onToolSelected(toolInfo);
     this.executionComponent.onToolSelected(toolInfo);
+    console.log("end onToolSelected");
   }
 }
