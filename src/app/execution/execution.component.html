@@ -1,6 +1,7 @@
 <h2 i18n="Execute|Execute tool title@@ExecuteToolTitle">Execute</h2>
 
-<textarea readonly>{{ generatedCommand }}</textarea>
+<textarea readonly id="generatedCommand">{{ generatedCommand }}</textarea>
 
-<button (click)="onExecuteTool($event)">Execute tool</button>
-<textarea>{{ output }}</textarea>
+<button id="execute" (click)="onExecuteTool($event)">Execute tool</button>
+
+<textarea id="output">{{ output }}</textarea>

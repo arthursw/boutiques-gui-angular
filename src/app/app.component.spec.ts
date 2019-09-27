@@ -15,23 +15,16 @@ import { By } from '@angular/platform-browser';
 @Component({ selector: 'search-tools', template: '', providers: [{ provide: SearchToolsComponent, useClass: SearchToolsStubComponent }] })
 class SearchToolsStubComponent {
   @Output() toolSelected = new EventEmitter<ToolInfo>();
-  constructor() {}
 }
 
 @Component({ selector: 'invocation', template: '', providers: [{ provide: InvocationComponent, useClass: InvocationStubComponent }] })
 class InvocationStubComponent {
-  constructor() {}
-  onToolSelected() {
-    console.log('Invocation:onToolSelected')
-  }
+  onToolSelected() {}
 }
 
 @Component({ selector: 'execution', template: '', providers: [{ provide: ExecutionComponent, useClass: ExecutionStubComponent }] })
 class ExecutionStubComponent {
-  constructor() {}
-  onToolSelected() {
-    console.log('Execution:onToolSelected')
-  }
+  onToolSelected() {}
 }
 
 describe('AppComponent', () => {

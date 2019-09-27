@@ -20,15 +20,27 @@ export class ExecutionComponent implements OnInit {
   }
 
   onToolSelected(toolInfo: ToolInfo) {
-  	this.tool = toolInfo;
+    this.tool = toolInfo;
   }
 
   onInvocationChanged(invocation: any) {
-  	this.invocation = invocation;
-  	this.toolService.generateCommand(this.tool.id, this.invocation).then((generatedCommand)=> this.generatedCommand = generatedCommand);
+    if(this.tool == null) {
+      console.log('Please select a tool first.') // TODO: display a real message
+      return;
+    }
+    this.invocation = invocation;
+    this.toolService.generateCommand(this.tool.id, this.invocation).then((generatedCommand)=> this.generatedCommand = generatedCommand);
   }
 
   onExecuteTool() {
-  	this.toolService.execute(this.tool.id, this.invocation).then((output)=> this.output = output);
+    if(this.tool == null) {
+      console.log('Please select a tool first.') // TODO: display a real message
+      return;
+    }
+    if(this.invocation == null || this.invocation == '') {
+      console.log('Invocation is empty.') // TODO: display a real message
+      return;
+    }
+    this.toolService.execute(this.tool.id, this.invocation).then((output)=> this.output = output);
   }
 }

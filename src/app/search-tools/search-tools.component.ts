@@ -18,7 +18,7 @@ export class SearchToolsComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSelectTool(toolInfo: ToolInfo) {
+  onToolSelected(toolInfo: ToolInfo) {
   	this.selectedTool = toolInfo;
     this.toolSelected.emit(this.selectedTool);
   }

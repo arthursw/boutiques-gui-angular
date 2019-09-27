@@ -20,17 +20,13 @@ export class AppComponent implements AfterViewInit {
   executionComponent: ExecutionComponent;
 
   constructor() {
-    console.log("begin AppComponent");
   }
 
   ngAfterViewInit() {
-    console.log("end begin AppComponent");
   }
 
   onToolSelected(toolInfo: ToolInfo) {
-    console.log("begin onToolSelected");
     this.invocationComponent.onToolSelected(toolInfo);
     this.executionComponent.onToolSelected(toolInfo);
-    console.log("end onToolSelected");
   }
 }

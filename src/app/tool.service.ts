@@ -16,7 +16,7 @@ export class ToolService extends EntityService<ToolInfo> {
   };
 
   constructor(private httpClient: HttpClient) {
-    super()
+    super(httpClient)
   }
 
   getEntityInstance(entity?: ToolInfo): ToolInfo
@@ -42,21 +42,21 @@ export class ToolService extends EntityService<ToolInfo> {
     return this.httpClient.get<Array<ToolInfo>>(`${this.API_URL}/all`).toPromise();
   }
 
-  getDescriptor(toolInfoId: number): Promise<any> {
-    return this.httpClient.get<any>(`${this.API_URL}/${encodeURIComponent(toolInfoId)}/descriptor/`).toPromise();
+  getDescriptor(toolId: number): Promise<any> {
+    return this.httpClient.get<any>(`${this.API_URL}/${encodeURIComponent(toolId)}/descriptor/`).toPromise();
   }
 
-  getInvocation(toolInfoId: number): Promise<string> {
-    return this.httpClient.get<string>(`${this.API_URL}/${encodeURIComponent(toolInfoId)}/invocation/`).toPromise();
+  getInvocation(toolId: number): Promise<string> {
+    return this.httpClient.get<string>(`${this.API_URL}/${encodeURIComponent(toolId)}/invocation/`).toPromise();
   }
 
-  generateCommand(toolInfoId: number, invocation: any): Promise<string> {
+  generateCommand(toolId: number, invocation: any): Promise<string> {
     let httpOptions = Object.assign( { responseType: 'text' }, this.httpOptions);
-    return this.httpClient.post<string>(`${this.API_URL}/${encodeURIComponent(toolInfoId)}/generate-command/`, invocation, httpOptions ).toPromise();
+    return this.httpClient.post<string>(`${this.API_URL}/${encodeURIComponent(toolId)}/generate-command/`, invocation, httpOptions ).toPromise();
   }
 
-  execute(toolInfoId: number, invocation: any): Promise<string> {
+  execute(toolId: number, invocation: any): Promise<string> {
     let httpOptions = Object.assign( { responseType: 'text' }, this.httpOptions);
-    return this.httpClient.post<string>(`${this.API_URL}/${encodeURIComponent(toolInfoId)}/execute/`, invocation, httpOptions).toPromise();
+    return this.httpClient.post<string>(`${this.API_URL}/${encodeURIComponent(toolId)}/execute/`, invocation, httpOptions).toPromise();
   }
 }

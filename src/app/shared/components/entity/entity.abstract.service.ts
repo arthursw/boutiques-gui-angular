@@ -25,7 +25,9 @@ export abstract class EntityService<T extends Entity> {
 
     abstract getEntityInstance(entity?: T): T;
 
-    protected http: HttpClient = ServiceLocator.injector.get(HttpClient);
+    // protected http: HttpClient = ServiceLocator.injector.get(HttpClient);
+
+    constructor(private http: HttpClient) {}
 
     getAll(): Promise<T[]> {
 

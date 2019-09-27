@@ -1,14 +1,33 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
+import { tick, TestBed, ComponentFixture, async, fakeAsync } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { FormsModule } from '@angular/forms';
+import { click } from '../testing';
+import { ToolService as FakeToolService } from '../testing/tool.service';
+import { ToolInfo as FakeToolInfo } from '../testing/tool.model';
+import { ToolInfo } from '../tool.model';
+import { ToolService } from '../tool.service';
+import { By } from '@angular/platform-browser';
 import { InvocationComponent } from './invocation.component';
+import { InvocationGuiComponent } from '../invocation-gui/invocation-gui.component';
+
+@Component({ selector: 'invocation-gui', template: '', providers: [{ provide: InvocationGuiComponent, useClass: InvocationGuiStubComponent }] })
+class InvocationGuiStubComponent {
+}
 
 describe('InvocationComponent', () => {
   let component: InvocationComponent;
   let fixture: ComponentFixture<InvocationComponent>;
 
+  let getToolService = ()=> {
+    return <any>component['toolService'] as FakeToolService;
+  }
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InvocationComponent ]
+      imports: [ FormsModule ],
+      declarations: [ InvocationComponent, InvocationGuiStubComponent ],
+      providers: [ { provide: ToolService, useClass: FakeToolService } ]
     })
     .compileComponents();
   }));
@@ -22,4 +41,23 @@ describe('InvocationComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should set invocation.descriptor and invocation.invocation when select tool', fakeAsync(() => {
+    expect(component.invocation).toBe(null, 'should be null');
+    expect(component.descriptor).toBe(null, 'should be null');
+    
+    const tool = new FakeToolInfo() as ToolInfo;
+    component.onToolSelected(tool);
+
+    tick();
+    fixture.detectChanges();
+
+    const expectedDescriptor = getToolService().getFakeDescriptor();
+    const expectedInvocation  = getToolService().getFakeInvocation();
+
+    expect(component.descriptor).toEqual(expectedDescriptor);
+    expect(component.invocation).toEqual(expectedInvocation);
+  }));
+
+
 });
