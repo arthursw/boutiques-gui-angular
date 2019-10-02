@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ToolDescriptorInfoComponent } from '../tool-descriptor-info/tool-descriptor-info.component';
 import { ToolInfo } from '../tool.model';
 import { ToolService } from '../tool.service';
 
@@ -14,6 +15,7 @@ export class InvocationComponent implements OnInit {
   @Output() invocationChanged = new EventEmitter<any>();
 
   descriptor: any = null
+  
   invocation: any = null
   invocationChangedTimeoutID: any = null
 

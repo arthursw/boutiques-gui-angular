@@ -1,0 +1,12 @@
+<div [formGroup]="form" [class]="'invocation-gui-parameter parameter-' + parameter.type | lowercase">
+  
+  <label [attr.for]="parameter.id">{{parameter.name}}</label>
+
+  <input [formControlName]="parameter.id" [id]="'invocation-gui-parameter-' + parameter.id" [type]="parameter.inputType">
+
+  <button *ngIf="parameter.type == 'File'" (click)="selectData">Select data</button>
+
+  <button (click)="parameter.set = !parameter.set">{{ parameter.set ? 'Unset' : 'Set' }}</button>
+
+  <div class="errorMessage" *ngIf="!isValid">{{question.label}} is required</div>
+</div>

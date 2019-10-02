@@ -1,1 +1,17 @@
 <p>invocation-gui</p>
+
+<form *ngIf="form" (ngSubmit)="onSubmit()" [formGroup]="form">
+
+  <div *ngFor="let parameter of parameters">
+    <parameter [parameter]="parameter" [form]="form"></parameter>
+  </div>
+
+  <div class="form-row">
+    <button type="submit" [disabled]="!form.valid">Save</button>
+  </div>
+
+  <div *ngIf="resultingInvocation">
+    <strong>Resulting invocation: </strong><br>{{resultingInvocation}}
+  </div>
+
+</form>

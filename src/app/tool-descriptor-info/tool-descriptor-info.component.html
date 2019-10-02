@@ -1,17 +1,17 @@
-<div #toolInfo *ngIf="tool">
+<div *ngIf="descriptor">
 
 	<ol>
 		<li>
 			<label i18n="Name:|Boutiques tool name label@@boutiquesToolName">Name:</label>
-			<span class="right-col">{{tool.name}}</span>
+			<span id="tool-name" class="right-col">{{descriptor.name}}</span>
 		</li> 
 		<li>
 			<label i18n="Description:|Boutiques tool description label@@boutiquesToolDescription">Description:</label>
-			<span class="right-col">{{tool.description}}</span>
+			<span id="tool-description" class="right-col">{{descriptor.description}}</span>
 		</li> 
 		<li>
 			<label i18n="Tags:|Boutiques tool tags label@@boutiquesToolTags">Tags:</label>
-			<span class="right-col">{{tool.tags}}</span>
+			<span id="tool-tags" class="right-col">{{descriptor.tags}}</span>
 		</li>
 	</ol>
 	

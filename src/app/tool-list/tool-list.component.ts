@@ -51,9 +51,6 @@ export class ToolListComponent extends BrowserPaginEntityListComponent<ToolInfo>
       { headerName: "Description", field: "description" },
       { headerName: "Id", field: "id" },
       { headerName: "Downloads", field: "downloads" }
-      // { headerName: "Center", field: "center.name" , type: "link", 
-      // action: (tool: ToollInfo) => this.router.navigate(['/center/details/' + tool.id])
-      // },
     ];
     return colDef;
   }

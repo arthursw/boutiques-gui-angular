@@ -32,7 +32,7 @@ export class ToolService {
   }
 
   getFakeDescriptor() {
-    return { name: 'fake descriptor'};
+    return { name: 'fake descriptor', description: 'fake description', tags: 'fake tags'};
   }
 
   getFakeInvocation() {

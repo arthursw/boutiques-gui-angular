@@ -12,7 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SearchToolsComponent } from './search-tools/search-tools.component';
 import { ToolListComponent } from './tool-list/tool-list.component';
-import { ToolInfoComponent } from './tool-info/tool-info.component';
+import { ToolDescriptorInfoComponent } from './tool-descriptor-info/tool-descriptor-info.component';
 
 import { CheckboxComponent } from './shared/checkbox/checkbox.component';
 import { ConfirmDialogComponent } from './shared/components/confirm-dialog/confirm-dialog.component';
@@ -58,12 +58,17 @@ import { InvocationComponent } from './invocation/invocation.component';
 import { InvocationGuiComponent } from './invocation-gui/invocation-gui.component';
 import { ExecutionComponent } from './execution/execution.component';
 
+import { InjectableRxStompConfig, RxStompService, rxStompServiceFactory } from '@stomp/ng2-stompjs';
+import { BoutiquesRxStompConfig } from './boutiques-rx-stomp.config';
+import { ParameterComponent } from './invocation-gui/parameter/parameter.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
     SearchToolsComponent,
     ToolListComponent,
-    ToolInfoComponent,
+    ToolDescriptorInfoComponent,
     AppComponent,
     ConfirmDialogComponent,
     ConsoleComponent,
@@ -94,7 +99,8 @@ import { ExecutionComponent } from './execution/execution.component';
     NotificationsComponent,
     InvocationComponent,
     InvocationGuiComponent,
-    ExecutionComponent
+    ExecutionComponent,
+    ParameterComponent
   ],
   imports: [
     BrowserModule,
@@ -130,6 +136,15 @@ import { ExecutionComponent } from './execution/execution.component';
         useClass: KeycloakHttpInterceptor,
         multi: true
     },
+    {
+      provide: InjectableRxStompConfig,
+      useValue: BoutiquesRxStompConfig
+    },
+    {
+      provide: RxStompService,
+      useFactory: rxStompServiceFactory,
+      deps: [InjectableRxStompConfig]
+    }
   ],
   bootstrap: [AppComponent]
 })

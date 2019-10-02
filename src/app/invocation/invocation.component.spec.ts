@@ -10,9 +10,17 @@ import { ToolService } from '../tool.service';
 import { By } from '@angular/platform-browser';
 import { InvocationComponent } from './invocation.component';
 import { InvocationGuiComponent } from '../invocation-gui/invocation-gui.component';
+import { ToolDescriptorInfoComponent } from '../tool-descriptor-info/tool-descriptor-info.component';
 
 @Component({ selector: 'invocation-gui', template: '', providers: [{ provide: InvocationGuiComponent, useClass: InvocationGuiStubComponent }] })
 class InvocationGuiStubComponent {
+}
+
+@Component({ selector: 'tool-descriptor-info', template: '', providers: [{ provide: ToolDescriptorInfoComponent, useClass: ToolDescriptorInfoStubComponent }] })
+class ToolDescriptorInfoStubComponent implements OnInit {
+  @Input() descriptor: any = null
+  ngOnInit() {
+  }
 }
 
 describe('InvocationComponent', () => {
@@ -26,7 +34,7 @@ describe('InvocationComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ FormsModule ],
-      declarations: [ InvocationComponent, InvocationGuiStubComponent ],
+      declarations: [ InvocationComponent, ToolDescriptorInfoStubComponent, InvocationGuiStubComponent ],
       providers: [ { provide: ToolService, useClass: FakeToolService } ]
     })
     .compileComponents();
@@ -42,7 +50,7 @@ describe('InvocationComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should set invocation.descriptor and invocation.invocation when select tool', fakeAsync(() => {
+  it('should set invocation.descriptor, invocation.invocation when select tool', fakeAsync(() => {
     expect(component.invocation).toBe(null, 'should be null');
     expect(component.descriptor).toBe(null, 'should be null');
     
@@ -58,6 +66,5 @@ describe('InvocationComponent', () => {
     expect(component.descriptor).toEqual(expectedDescriptor);
     expect(component.invocation).toEqual(expectedInvocation);
   }));
-
 
 });

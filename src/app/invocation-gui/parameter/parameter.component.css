@@ -1,0 +1,13 @@
+.invocation-gui-parameter {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;	
+}
+
+input {
+	flex-grow: 1;
+}
+
+.invocation-gui-parameter > label, input, button {
+	margin: 5px;
+}

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ToolInfoComponent } from './tool-info.component';
+import { ParameterComponent } from './parameter.component';
 
-describe('ToolInfoComponent', () => {
-  let component: ToolInfoComponent;
-  let fixture: ComponentFixture<ToolInfoComponent>;
+describe('ParameterComponent', () => {
+  let component: ParameterComponent;
+  let fixture: ComponentFixture<ParameterComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ToolInfoComponent ]
+      declarations: [ ParameterComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ToolInfoComponent);
+    fixture = TestBed.createComponent(ParameterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
