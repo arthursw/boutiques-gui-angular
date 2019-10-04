@@ -61,6 +61,7 @@ import { ExecutionComponent } from './execution/execution.component';
 import { InjectableRxStompConfig, RxStompService, rxStompServiceFactory } from '@stomp/ng2-stompjs';
 import { BoutiquesRxStompConfig } from './boutiques-rx-stomp.config';
 import { ParameterComponent } from './invocation-gui/parameter/parameter.component';
+import { ParameterGroupComponent } from './invocation-gui/parameter-group/parameter-group.component';
 
 
 @NgModule({
@@ -100,7 +101,8 @@ import { ParameterComponent } from './invocation-gui/parameter/parameter.compone
     InvocationComponent,
     InvocationGuiComponent,
     ExecutionComponent,
-    ParameterComponent
+    ParameterComponent,
+    ParameterGroupComponent
   ],
   imports: [
     BrowserModule,

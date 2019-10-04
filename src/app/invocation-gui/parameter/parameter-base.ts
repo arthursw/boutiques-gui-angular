@@ -3,14 +3,14 @@ export class ParameterBase<T> {
   id: string;
   name: string;
   description: string;
-  required: boolean;
+  optional: boolean;
   type: string;
   inputType: string;
 
   readonly typeToInputType = {
     'String': 'text',
     'File': 'text',
-    'Boolean': 'checkbox',
+    'Flag': 'checkbox',
     'Number': 'number',
     '': 'text'
   };
@@ -20,16 +20,21 @@ export class ParameterBase<T> {
       id?: string,
       name?: string,
       description?: string,
-      required?: boolean,
+      optional?: boolean,
       type?: string
     } = {}) {
     this.value = options.value;
     this.id = options.id || '';
     this.name = options.name || '';
-    this.required = !!options.required;
+    this.optional = !!options.optional;
     this.description = options.description || '';
     this.type = options.type || '';
     this.inputType = this.typeToInputType[this.type];
+  }
+
+  parseValue(value: any) {
+    return  this.type == 'Number' ? +value :
+            this.type == 'Flag' ? value == 'on' || value === true : value;
   }
 }
 

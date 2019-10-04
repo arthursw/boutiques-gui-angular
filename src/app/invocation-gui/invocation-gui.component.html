@@ -1,17 +1,15 @@
 <p>invocation-gui</p>
 
-<form *ngIf="form" (ngSubmit)="onSubmit()" [formGroup]="form">
+<form *ngIf="form" [formGroup]="form">
 
-  <div *ngFor="let parameter of parameters">
-    <parameter [parameter]="parameter" [form]="form"></parameter>
+  <div id="required-parameters">
+    <h3>Required parameters</h3>
+    <parameter-group *ngFor="let parameterGroup of parameterGroups['required'] | keyvalue" [parameterGroup]="parameterGroup.value" [formGroup]="form.controls['required'].controls[parameterGroup.key]"></parameter-group>
   </div>
 
-  <div class="form-row">
-    <button type="submit" [disabled]="!form.valid">Save</button>
-  </div>
-
-  <div *ngIf="resultingInvocation">
-    <strong>Resulting invocation: </strong><br>{{resultingInvocation}}
+  <div id="optional-parameters">
+    <h3>Optional parameters</h3>
+    <parameter-group *ngFor="let parameterGroup of parameterGroups['optional'] | keyvalue" [parameterGroup]="parameterGroup.value" [formGroup]="form.controls['optional'].controls[parameterGroup.key]"></parameter-group>
   </div>
 
 </form>

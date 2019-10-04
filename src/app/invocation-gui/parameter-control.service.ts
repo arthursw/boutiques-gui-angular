@@ -11,8 +11,7 @@ export class ParameterControlService {
     let group: any = {};
 
     parameters.forEach(parameter => {
-      group[parameter.id] = parameter.required ? new FormControl(parameter.value || '', Validators.required)
-                                            	: new FormControl(parameter.value || '');
+      group[parameter.id] = new FormControl(parameter.value || '');
     });
     return new FormGroup(group);
   }

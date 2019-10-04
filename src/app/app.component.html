@@ -2,5 +2,5 @@
 <h1>Boutiques GUI</h1>
 
 <search-tools (toolSelected)="onToolSelected($event)"></search-tools>
-<invocation (invocationChanged)="execution.onInvocationChanged($event)"></invocation>
-<execution #execution></execution>
+<invocation class="flex-column" (invocationChanged)="execution.onInvocationChanged($event)"></invocation>
+<execution class="flex-column" #execution></execution>

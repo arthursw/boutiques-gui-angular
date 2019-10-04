@@ -2,6 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ToolDescriptorInfoComponent } from '../tool-descriptor-info/tool-descriptor-info.component';
 import { ToolInfo } from '../tool.model';
 import { ToolService } from '../tool.service';
+import { Observable, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'invocation',
@@ -19,9 +21,27 @@ export class InvocationComponent implements OnInit {
   invocation: any = null
   invocationChangedTimeoutID: any = null
 
+  private invocationSubject = new Subject<string>();
+
   constructor(private toolService: ToolService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.invocationSubject.pipe(
+      // wait 1 second after each keystroke before considering the term
+      debounceTime(1000),
+
+      // ignore new term if same as previous term
+      distinctUntilChanged()
+    ).subscribe(this.updateInvocation);
+  }
+
+  updateInvocation(invocationValue: string) {
+    try{
+      this.invocation = JSON.parse(invocationValue);
+      this.invocationChanged.emit(this.invocation);
+    } catch(e) {
+      console.log('error occored while you were typing the JSON');
+    };
   }
 
   onToolSelected(toolInfo: ToolInfo) {
@@ -33,18 +53,17 @@ export class InvocationComponent implements OnInit {
     });
   }
 
+  onInvocationChanged(invocation) {
+    this.invocation = invocation;
+    this.invocationChanged.emit(this.invocation);
+  }
+
   get invocationValue() {
     return this.invocation ? JSON.stringify(this.invocation, null, 2) : '';
   }
 
   set invocationValue(v) {
-    try{
-      this.invocation = JSON.parse(v);
-      clearTimeout(this.invocationChangedTimeoutID);
-      this.invocationChangedTimeoutID = setTimeout(()=> this.invocationChanged.emit(this.invocation), 1000);
-    } catch(e) {
-      console.log('error occored while you were typing the JSON');
-    };
+    this.invocationSubject.next(v);
   }
 
 }

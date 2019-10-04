@@ -11,3 +11,10 @@ input {
 .invocation-gui-parameter > label, input, button {
 	margin: 5px;
 }
+.invocation-gui-parameter > input[type="checkbox"] {
+	position: absolute;
+	left: 10px;
+}
+.invocation-gui-parameter.parameter-flag > label {
+	margin-left: 40px;
+}
