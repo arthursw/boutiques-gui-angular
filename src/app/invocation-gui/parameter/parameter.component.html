@@ -6,6 +6,6 @@
 
   <button *ngIf="parameter.type == 'File'" (click)="selectData">Select data</button>
 
-  <button *ngIf="parameter.optional" (click)="onUnset($event)">Unset</button>
+  <button *ngIf="parameter.optional" (click)="unset($event)">Unset</button>
 
 </div>

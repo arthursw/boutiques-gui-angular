@@ -8,6 +8,14 @@ import { ToolService } from '../tool.service';
 import { click } from '../testing';
 import { By } from '@angular/platform-browser';
 import { ExecutionComponent } from './execution.component';
+import { RxStompService } from '@stomp/ng2-stompjs';
+import { Observable } from 'rxjs/Observable';
+
+class RxStompStubService {
+  watch() {
+    return new Observable();
+  }
+}
 
 describe('ExecutionComponent', () => {
   let component: ExecutionComponent;
@@ -20,7 +28,7 @@ describe('ExecutionComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ExecutionComponent ],
-      providers: [ { provide: ToolService, useClass: FakeToolService } ]
+      providers: [ { provide: ToolService, useClass: FakeToolService }, { provide: RxStompService, useClass: RxStompStubService } ]
     })
     .compileComponents();
   }));

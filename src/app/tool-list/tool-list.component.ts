@@ -13,7 +13,7 @@
  */
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 
-import { BrowserPaginEntityListComponent } from '../shared/components/entity/entity-list.browser.component.abstract';
+import { BrowserPagingEntityListComponent } from '../shared/components/entity/entity-list.browser.component.abstract';
 import { TableComponent } from '../shared/components/table/table.component';
 import { ToolInfo } from '../tool.model';
 import { ToolService } from '../tool.service';
@@ -23,7 +23,7 @@ import { ToolService } from '../tool.service';
   templateUrl: 'tool-list.component.html',
   styleUrls: ['tool-list.component.css'],
 })
-export class ToolListComponent extends BrowserPaginEntityListComponent<ToolInfo> {
+export class ToolListComponent extends BrowserPagingEntityListComponent<ToolInfo> {
   
   @Output() toolSelected = new EventEmitter<ToolInfo>();
   @ViewChild('table', { static: true }) table: TableComponent;

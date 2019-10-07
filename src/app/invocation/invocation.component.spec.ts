@@ -14,6 +14,7 @@ import { ToolDescriptorInfoComponent } from '../tool-descriptor-info/tool-descri
 
 @Component({ selector: 'invocation-gui', template: '', providers: [{ provide: InvocationGuiComponent, useClass: InvocationGuiStubComponent }] })
 class InvocationGuiStubComponent {
+  @Input() descriptor: any = null
 }
 
 @Component({ selector: 'tool-descriptor-info', template: '', providers: [{ provide: ToolDescriptorInfoComponent, useClass: ToolDescriptorInfoStubComponent }] })

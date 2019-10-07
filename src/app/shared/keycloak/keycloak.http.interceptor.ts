@@ -15,9 +15,10 @@
 import { Injectable } from "@angular/core";
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { catchError } from 'rxjs/operators';
 import { switchMap } from 'rxjs/operators';
+import 'rxjs/add/observable/throw';
 
 import { KeycloakService } from "./keycloak.service";
 

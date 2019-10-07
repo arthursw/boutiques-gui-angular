@@ -223,7 +223,7 @@ export class TableComponent implements OnInit {
         this.getPage(this.getPageable()).then(page => {
             this.page = page;
             setTimeout(() => this.isLoading = false, 200);
-        });
+        }).catch((reason)=>console.log(reason));
     }
 
     /**

@@ -1,6 +1,7 @@
 import { Component, Input, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl }        from '@angular/forms';
 import { ParameterBase }     from './parameter-base';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'parameter',
@@ -24,19 +25,20 @@ export class ParameterComponent {
   	return;
   }
 
-  onUnset() {
+  unset() {
     let activeControl = this.formGroup.get(this.parameter.id) as FormControl;
-    this.formGroup.controls[this.parameter.id].markAsPristine();
-    // activeControl.setValue(activeControl.value);
+    activeControl.markAsPristine();
     activeControl.setValue(this.parameter.type != 'Flag' ? null : false);
-    this.parameterInput.nativeElement.checked = false;
+    if(this.parameter.type == 'Flag') {
+      this.parameterInput.nativeElement.checked = false;
+    }
   }
 
   onChange(eventTarget: any) {
     if(this.parameter.type != 'Flag') {
       return;
     }
-    let activeControl = this.formGroup.get(this.parameter.id) as FormControl;
+    let activeControl = this.formGroup.get(this.parameter.id) as FormControl
     activeControl.setValue(eventTarget.checked);
   }
 }
