@@ -1,8 +1,7 @@
 import { asyncData, asyncError } from './testing/index';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { HttpClient, HttpResponse, HttpErrorResponse } from '@angular/common/http';
-
-import { TestBed } from '@angular/core/testing';
+import { TestBed, ComponentFixture, async, fakeAsync, flushMicrotasks } from '@angular/core/testing';
 
 import { ToolService } from './tool.service';
 import { ToolInfo } from './tool.model';
@@ -44,11 +43,11 @@ describe('ToolService', () => {
        ] as ToolInfo[];
     });
 
-    it('should return expected tool', () => {
-      service.getAll().then(
-        tools => expect(tools).toEqual(expectedTools, 'should return expected tools'),
-        fail
-      );
+    it('should return expected tool', fakeAsync(() => {
+
+      let allTools: any[] = null;
+
+      service.getAll().then( tools => allTools = tools, fail );
 
       // HeroService should have made one request to GET heroes from expected URL
       const req = httpTestingController.expectOne(service.API_URL + '/all');
@@ -56,30 +55,43 @@ describe('ToolService', () => {
 
       // Respond with the mock heroes
       req.flush(expectedTools);
-    });
 
-    it('should be OK returning no tool', () => {
-      service.getAll().then(
-        tools => expect(tools.length).toEqual(0, 'should have empty tool array'),
-        fail
-      );
+      flushMicrotasks();
+      expect(allTools).toEqual(expectedTools, 'should return expected tools');
+
+    }));
+
+    it('should be OK returning no tool', fakeAsync(() => {
+
+      let allTools: any[] = null;
+
+      service.getAll().then(tools => allTools = tools, fail);
 
       const req = httpTestingController.expectOne(service.API_URL + '/all');
       req.flush([]); // Respond with no heroes
-    });
 
-    it('should turn 404 into a user-friendly error', () => {
+      flushMicrotasks();
+
+      expect(allTools.length).toEqual(0, 'should have empty tool array')
+
+    }));
+
+    it('should turn 404 into a user-friendly error', fakeAsync(() => {
       const message = 'Deliberate 404';
-      service.getAll().then(
-        tools => fail('expected to fail'),
-        error => expect(error.error).toContain(message)
-      );
+      
+      let hasFailed: boolean = null;
+
+      service.getAll().then( tools => hasFailed = false, error => hasFailed = true );
 
       const req = httpTestingController.expectOne(service.API_URL + '/all');
 
       // respond with a 404 and the error message in the body
       req.flush(message, {status: 404, statusText: 'Not Found'});
-    });
+
+      flushMicrotasks();
+
+      expect(hasFailed).toBeTruthy();
+    }));
 
   });
 
@@ -91,11 +103,10 @@ describe('ToolService', () => {
       service = TestBed.get(ToolService);
     });
 
-    it('should return expected tool descriptor', () => {
-      service.getDescriptor(toolId).then(
-        descriptor => expect(descriptor).toEqual(expectedDescriptor, 'should return expected descriptor'),
-        fail
-      );
+    it('should return expected tool descriptor', fakeAsync(() => {
+      let descriptor = null;
+
+      service.getDescriptor(toolId).then( d => descriptor = d, fail );
 
       // HeroService should have made one request to GET heroes from expected URL
       const req = httpTestingController.expectOne(`${service.API_URL}/${encodeURIComponent(toolId)}/descriptor/`);
@@ -103,20 +114,26 @@ describe('ToolService', () => {
 
       // Respond with the mock heroes
       req.flush(expectedDescriptor);
-    });
 
-    it('should turn 404 into a user-friendly error', () => {
+      flushMicrotasks();
+      expect(descriptor).toEqual(expectedDescriptor, 'should return expected descriptor');
+    }));
+
+    it('should turn 404 into a user-friendly error', fakeAsync(() => {
+      let errorMessage: string = null;
+
       const message = 'Deliberate 404';
-      service.getDescriptor(toolId).then(
-        tools => fail('expected to fail'),
-        error => expect(error.error).toContain(message)
-      );
+      service.getDescriptor(toolId).then( tools => errorMessage = null, error => errorMessage = error.error );
 
       const req = httpTestingController.expectOne(`${service.API_URL}/${encodeURIComponent(toolId)}/descriptor/`);
 
       // respond with a 404 and the error message in the body
       req.flush(message, {status: 404, statusText: 'Not Found'});
-    });
+
+      flushMicrotasks();
+
+      expect(errorMessage).toContain(message);
+    }));
 
   });
 
@@ -128,11 +145,9 @@ describe('ToolService', () => {
       service = TestBed.get(ToolService);
     });
 
-    it('should return expected tool invocation', () => {
-      service.getInvocation(toolId).then(
-        invocation => expect(invocation).toEqual(expectedInvocation, 'should return expected invocation'),
-        fail
-      );
+    it('should return expected tool invocation', fakeAsync(() => {
+      let invocation = null;
+      service.getInvocation(toolId).then( i => invocation = i, fail );
 
       // HeroService should have made one request to GET heroes from expected URL
       const req = httpTestingController.expectOne(`${service.API_URL}/${encodeURIComponent(toolId)}/invocation/`);
@@ -140,20 +155,27 @@ describe('ToolService', () => {
 
       // Respond with the mock heroes
       req.flush(expectedInvocation);
-    });
 
-    it('should turn 404 into a user-friendly error', () => {
+      flushMicrotasks();
+
+      expect(invocation).toEqual(expectedInvocation, 'should return expected invocation');
+    }));
+
+    it('should turn 404 into a user-friendly error', fakeAsync(() => {
       const message = 'Deliberate 404';
-      service.getInvocation(toolId).then(
-        tools => fail('expected to fail'),
-        error => expect(error.error).toContain(message)
-      );
+      let errorMessage: string = null;
+
+      service.getInvocation(toolId).then( invocation => errorMessage = null, error => errorMessage = error.error );
 
       const req = httpTestingController.expectOne(`${service.API_URL}/${encodeURIComponent(toolId)}/invocation/`);
 
       // respond with a 404 and the error message in the body
       req.flush(message, {status: 404, statusText: 'Not Found'});
-    });
+
+      flushMicrotasks();
+
+      expect(errorMessage).toContain(message);
+    }));
 
   });
 
@@ -166,11 +188,9 @@ describe('ToolService', () => {
       service = TestBed.get(ToolService);
     });
 
-    it('should return expected generated command', () => {
-      service.generateCommand(toolId, fakeInvocation).then(
-        command => expect(command).toEqual(expectedCommand, 'should return expected generated command'),
-        fail
-      );
+    it('should return expected generated command', fakeAsync( () => {
+      let command = null;
+      service.generateCommand(toolId, fakeInvocation).then( c => command = c, fail );
 
       // HeroService should have made one request to GET heroes from expected URL
       const req = httpTestingController.expectOne(`${service.API_URL}/${encodeURIComponent(toolId)}/generate-command/`);
@@ -180,20 +200,25 @@ describe('ToolService', () => {
 
       // Respond with the mock heroes
       req.flush(expectedCommand);
-    });
 
-    it('should turn 404 into a user-friendly error', () => {
+      flushMicrotasks();
+      expect(command).toEqual(expectedCommand, 'should return expected generated command');
+    }));
+
+    it('should turn 404 into a user-friendly error', fakeAsync( () => {
       const message = 'Deliberate 404';
-      service.generateCommand(toolId, fakeInvocation).then(
-        tools => fail('expected to fail'),
-        error => expect(error.error).toContain(message)
-      );
+
+      let errorMessage = null;
+      service.generateCommand(toolId, fakeInvocation).then( c => errorMessage = null, error => errorMessage = error.error );
 
       const req = httpTestingController.expectOne(`${service.API_URL}/${encodeURIComponent(toolId)}/generate-command/`);
 
       // respond with a 404 and the error message in the body
       req.flush(message, {status: 404, statusText: 'Not Found'});
-    });
+
+      flushMicrotasks();
+      expect(errorMessage).toContain(message);
+    }));
 
   });
 
@@ -206,11 +231,11 @@ describe('ToolService', () => {
       service = TestBed.get(ToolService);
     });
 
-    it('should return expected resulting output', () => {
-      service.execute(toolId, fakeInvocation).then(
-        output => expect(output).toEqual(expectedOutput, 'should return expected resulting output'),
-        fail
-      );
+    it('should return expected resulting output', fakeAsync( () => {
+
+      let output = null;
+
+      service.execute(toolId, fakeInvocation).then( o => output = o, fail );
 
       // HeroService should have made one request to GET heroes from expected URL
       const req = httpTestingController.expectOne(`${service.API_URL}/${encodeURIComponent(toolId)}/execute/`);
@@ -220,20 +245,25 @@ describe('ToolService', () => {
 
       // Respond with the mock heroes
       req.flush(expectedOutput);
-    });
 
-    it('should turn 404 into a user-friendly error', () => {
+      flushMicrotasks();
+      expect(output).toEqual(expectedOutput, 'should return expected resulting output');
+    }));
+
+    it('should turn 404 into a user-friendly error', fakeAsync(() => {
       const message = 'Deliberate 404';
-      service.execute(toolId, fakeInvocation).then(
-        tools => fail('expected to fail'),
-        error => expect(error.error).toContain(message)
-      );
+
+      let errorMessage = null;
+      service.execute(toolId, fakeInvocation).then( c => errorMessage = null, error => errorMessage = error.error );
 
       const req = httpTestingController.expectOne(`${service.API_URL}/${encodeURIComponent(toolId)}/execute/`);
 
       // respond with a 404 and the error message in the body
       req.flush(message, {status: 404, statusText: 'Not Found'});
-    });
+
+      flushMicrotasks();
+      expect(errorMessage).toContain(message);
+    }));
 
   });
 

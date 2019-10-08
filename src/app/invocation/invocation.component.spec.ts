@@ -66,6 +66,12 @@ describe('InvocationComponent', () => {
 
     expect(component.descriptor).toEqual(expectedDescriptor);
     expect(component.invocation).toEqual(expectedInvocation);
+
+    let toolDescriptorInfoComponent = fixture.debugElement.query(By.directive(ToolDescriptorInfoStubComponent)).componentInstance;
+    let invocationGuiComponent = fixture.debugElement.query(By.directive(InvocationGuiStubComponent)).componentInstance;
+
+    expect(toolDescriptorInfoComponent.descriptor).toEqual(expectedDescriptor);
+    expect(invocationGuiComponent.descriptor).toEqual(expectedDescriptor);
   }));
 
 });

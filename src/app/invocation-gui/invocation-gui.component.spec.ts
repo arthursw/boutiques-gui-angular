@@ -13,7 +13,6 @@ class ParameterGroupStubComponent {
   @Input() formGroup: any = null
 }
 
-
 describe('InvocationGuiComponent', () => {
   let component: InvocationGuiComponent;
   let fixture: ComponentFixture<InvocationGuiComponent>;
@@ -35,5 +34,10 @@ describe('InvocationGuiComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should be empty if form is null', () => {
+    expect(component.form).toBeNull();
+    console.log(fixture.nativeElement);
   });
 });

@@ -2,14 +2,14 @@ import { Component, Input } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ParameterGroupComponent } from './parameter-group.component';
-import { ParameterGroupBase } from './parameter-group-base';
-import { ParameterBase } from '../parameter/parameter-base';
+import { ParameterGroup } from './parameter-group';
+import { Parameter } from '../parameter/parameter';
 import { ParameterComponent } from '../parameter/parameter.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({ selector: 'parameter', template: '', providers: [{ provide: ParameterComponent, useClass: ParameterStubComponent }] })
 class ParameterStubComponent {
-  @Input() parameter: ParameterBase<any> = new ParameterBase<any>({});
+  @Input() parameter: Parameter<any> = new Parameter<any>();
   @Input() formGroup: any = null
 }
 
@@ -28,7 +28,7 @@ describe('ParameterGroupComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ParameterGroupComponent);
     component = fixture.componentInstance;
-    component.parameterGroup = new ParameterGroupBase({ id: 'fake_group', name: 'fake group', description: 'fake group description' });
+    component.parameterGroup = new ParameterGroup({ id: 'fake_group', name: 'fake group', description: 'fake group description', members: [] });
     component.parameterGroup.members = [];
     fixture.detectChanges();
   });

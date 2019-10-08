@@ -1,6 +1,6 @@
 import { Component, Input, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl }        from '@angular/forms';
-import { ParameterBase }     from './parameter-base';
+import { Parameter }     from './parameter';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
@@ -10,7 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 })
 export class ParameterComponent {
 
-  @Input() parameter: ParameterBase<any>;
+  @Input() parameter: Parameter<any>;
   @Input() formGroup: FormGroup;
   @ViewChild('parameterInput', { static: false }) parameterInput: ElementRef;
 

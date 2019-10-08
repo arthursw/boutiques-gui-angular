@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core';
 import { FormControl, FormGroup }        from '@angular/forms';
-import { ParameterBase }     from '../parameter/parameter-base';
+import { Parameter }     from '../parameter/parameter';
 import { ParameterComponent }     from '../parameter/parameter.component';
-import { ParameterGroupBase }     from './parameter-group-base';
+import { ParameterGroup }     from './parameter-group';
 
 @Component({
   selector: 'parameter-group',
@@ -11,7 +11,7 @@ import { ParameterGroupBase }     from './parameter-group-base';
 })
 export class ParameterGroupComponent implements OnInit {
 
-  @Input() parameterGroup: ParameterGroupBase;
+  @Input() parameterGroup: ParameterGroup;
   @Input() formGroup: FormGroup;
   @ViewChildren(ParameterComponent) parameterComponents !: QueryList<ParameterComponent>;
 
