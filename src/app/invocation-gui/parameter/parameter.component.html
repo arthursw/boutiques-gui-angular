@@ -4,8 +4,8 @@
 
   <input #parameterInput [formControlName]="parameter.id" [id]="'invocation-gui-parameter-' + parameter.id" [type]="parameter.inputType" [checked]="parameter.value" (change)="onChange($event.target)">
 
-  <button *ngIf="parameter.type == 'File'" (click)="selectData">Select data</button>
+  <button class="select-data" *ngIf="parameter.type == 'File'" (click)="selectData">Select data</button>
 
-  <button *ngIf="parameter.optional" (click)="unset($event)">Unset</button>
+  <button class="unset" *ngIf="parameter.optional" (click)="unset($event)">Unset</button>
 
 </div>

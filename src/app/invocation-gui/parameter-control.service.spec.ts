@@ -4,45 +4,7 @@ import { ParameterControlService } from './parameter-control.service';
 import { Parameter, ParameterDescription } from './parameter/parameter';
 import { ParameterGroup, ParameterGroupDescription } from './parameter-group/parameter-group';
 import { Descriptor } from './descriptor';
-
-
-let fakeDescriptor: Descriptor = {
-  name: 'fake tool',
-  description: 'fake tool description',
-  author: 'fake author',
-  'command-line': 'fake command line',
-  'descriptor-url': 'fake url',
-  'container-image': 'fake container',
-  inputs: [],
-  groups: [],
-  'output-files': [],
-  tags: {},
-  tests: {},
-  'tool-version': ''
-};
-
-let idPrefix = 'fake id ';
-let valuePrefix = 'fake value ';
-let namePrefix = 'fake name ';
-let descriptionPrefix = 'fake description ';
-
-let i = 0;
-for(let type of ['String', 'Number', 'File', 'Flag']) {
-  let parameterDescription = new ParameterDescription();
-  parameterDescription.id = idPrefix + i;
-  parameterDescription.value = valuePrefix + i;
-  parameterDescription.name = namePrefix + i;
-  parameterDescription.description = descriptionPrefix + i;
-  parameterDescription.optional = i > 1;
-  parameterDescription.type = type;
-  // TODO: test min max
-  // parameterDescription.minimum = 0;
-  fakeDescriptor.inputs.push(parameterDescription);
-  i++;
-}
-
-fakeDescriptor.groups.push({ id: idPrefix + 0, name: namePrefix + 0, description: descriptionPrefix + 0, members: [idPrefix + 0, idPrefix + 1] });
-fakeDescriptor.groups.push({ id: idPrefix + 1, name: namePrefix + 1, description: descriptionPrefix + 1, members: [idPrefix + 2, idPrefix + 3],  'mutually-exclusive': true });
+import { fakeDescriptor, idPrefix, namePrefix, descriptionPrefix, valuePrefix } from './fake-descriptor';
 
 describe('ParameterControlService', () => {
   let service: ParameterControlService = null;
@@ -130,7 +92,7 @@ describe('ParameterControlService', () => {
     expect(invocation).toEqual({});
   });
   
-  it('should generate an empty invocation from form groups if form is pristine', ()=> {
+  it('should generate the proper invocation from form groups when form is changed', ()=> {
     let parameterGroups = {
       required: new Map<string, ParameterGroup>(),
       optional: new Map<string, ParameterGroup>()

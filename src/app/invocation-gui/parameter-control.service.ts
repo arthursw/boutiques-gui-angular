@@ -83,14 +83,14 @@ export class ParameterControlService {
   }
 
   createParameterGroup(group: ParameterGroupDescription, groupIdPrefix: number, idToParameterDescription: Map<string, any>, formGroups: { required: any, optional: any }, parameterGroups: ParameterGroups) {
-    group.id = groupIdPrefix + group.id;
-    let parameterGroup = new ParameterGroup(group);
-    for(let parameterId of group.members) {
+    let groupCopy = { ...group, id: groupIdPrefix + group.id }; // Copy the group description to avoid changing descriptor (which could be reused in the futur and must remain unchanged)
+    let parameterGroup = new ParameterGroup(groupCopy);
+    for(let parameterId of groupCopy.members) {
       this.createParameter(parameterId, parameterGroup, idToParameterDescription);
     }
     let parameterGroupName = parameterGroup.optional ? 'optional' : 'required';
-    parameterGroups[parameterGroupName].set(group.id, parameterGroup);
-    formGroups[parameterGroupName][group.id] = this.toFormGroup(parameterGroup.parameters);
+    parameterGroups[parameterGroupName].set(groupCopy.id, parameterGroup);
+    formGroups[parameterGroupName][groupCopy.id] = this.toFormGroup(parameterGroup.parameters);
   }
 
 
@@ -149,7 +149,6 @@ export class ParameterControlService {
           let parameter: Parameter<any> = this.idToParameter.get(parameterId);
           let dirty = (formGroup.controls[parameterId] as FormControl).dirty
           if(dirty) {
-            console.log(parameterValue);
             invocation[parameterId] = parameter.parseValue(parameterValue);
           }
         }

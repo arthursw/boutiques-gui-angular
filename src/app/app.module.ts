@@ -63,6 +63,7 @@ import { BoutiquesRxStompConfig } from './boutiques-rx-stomp.config';
 import { ParameterComponent } from './invocation-gui/parameter/parameter.component';
 import { ParameterGroupComponent } from './invocation-gui/parameter-group/parameter-group.component';
 
+import { ReplaceSpacePipe } from './utils/pipes';
 
 @NgModule({
   declarations: [
@@ -102,7 +103,8 @@ import { ParameterGroupComponent } from './invocation-gui/parameter-group/parame
     InvocationGuiComponent,
     ExecutionComponent,
     ParameterComponent,
-    ParameterGroupComponent
+    ParameterGroupComponent,
+    ReplaceSpacePipe
   ],
   imports: [
     BrowserModule,
