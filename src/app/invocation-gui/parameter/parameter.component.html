@@ -2,9 +2,9 @@
   
   <label [attr.for]="'invocation-gui-parameter-' + parameter.id" [class]="">{{parameter.name}}</label>
 
-  <input #parameterInput [formControlName]="parameter.id" [id]="'invocation-gui-parameter-' + parameter.id" [type]="parameter.inputType" [checked]="parameter.value" (change)="onChange($event.target)">
+  <input #parameterInput [formControlName]="parameter.id" [id]="'invocation-gui-parameter-' + parameter.id" [type]="parameter.getInputType()" [checked]="parameter.value" (change)="onChange($event.target)" [min]="parameter.getMinimum()" [max]="parameter.getMaximum()">
 
-  <button class="select-data" *ngIf="parameter.type == 'File'" (click)="selectData">Select data</button>
+  <button class="select-data" *ngIf="parameter.type == 'File'" (click)="selectData">{{displaySelectData()}}</button>
 
   <button class="unset" *ngIf="parameter.optional" (click)="unset($event)">Unset</button>
 

@@ -79,7 +79,6 @@ describe('InvocationGuiComponent', () => {
 
     // expect(parameter0DebugElement).toBeDefined();
     // expect(parameter1DebugElement).toBeDefined();
-    // expect(null).toBeDefined();
 
     // expect(parameterSelectDebugElement).toBeDefined();
     // expect(parameter2UndefinedDebugElement == null).toBeTruthy();

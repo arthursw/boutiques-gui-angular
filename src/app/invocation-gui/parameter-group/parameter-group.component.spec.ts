@@ -112,7 +112,7 @@ describe('ParameterGroupComponent', () => {
     const selectDebugElement = fixture.debugElement.query(By.css('select'));
     expect(selectDebugElement).not.toBeNull();
     const optionDebugElements = fixture.debugElement.queryAll(By.css('option'));
-    expect(optionDebugElements.length).toEqual(2);
+    expect(optionDebugElements.length).toEqual(4);
   });
 
 });

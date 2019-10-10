@@ -7,13 +7,20 @@ export class ParameterDescription<T> {
   optional: boolean
   type: string
   'value-key': string
+  list?: boolean
+  integer?: boolean
+  minimum?: number
+  maximum?: number
+  'exclusive-minimum'?: number
+  'exclusive-maximum'?: number
 }
 
 // The parameter object, model of the formGroup (created from ParameterDescription)
 export class Parameter<T> extends ParameterDescription<T> {
-  inputType: string
+  
+  static readonly epsilon = 0.0000001
 
-  readonly typeToInputType = {
+  static readonly typeToInputType = {
     'String': 'text',
     'File': 'text',
     'Flag': 'checkbox',
@@ -29,12 +36,43 @@ export class Parameter<T> extends ParameterDescription<T> {
     this.optional = !!description.optional;
     this.description = description.description || '';
     this.type = description.type || '';
-    this.inputType = this.typeToInputType[this.type];
+    this.list = description.list || false;
+    this.minimum = description.minimum;
+    this.maximum = description.maximum;
+    this['exclusive-minimum'] = description['exclusive-minimum'];
+    this['exclusive-maximum'] = description['exclusive-maximum'];
+    this.integer = description.integer || false;
+  }
+
+  getMinimum() {
+    return this['exclusive-minimum'] != null ? (this['exclusive-minimum'] + (this.integer ? 1 : Parameter.epsilon) ) : this.minimum;
+  }
+
+  getMaximum() {
+    return this['exclusive-maximum'] != null ? (this['exclusive-maximum'] - (this.integer ? 1 : Parameter.epsilon) ) : this.maximum;
+  }
+
+  getInputType() {
+    return this.list ? 'text' : Parameter.typeToInputType[this.type];
   }
 
   parseValue(value: any) {
-    return  this.type == 'Number' ? +value :
-            this.type == 'Flag' ? value == 'on' || value === true : value;
+    if(this.list) {
+      try {
+        return JSON.parse('[' + value + ']');
+      } catch (e) {
+        console.log(e);
+        return [];
+      }
+    }
+    switch (this.type) {
+      case 'Number':
+        return +value;
+      case 'Flag':
+        return value == 'on' || value === true;
+      default:
+        return value;
+    }
   }
 }
 

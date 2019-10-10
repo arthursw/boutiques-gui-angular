@@ -82,6 +82,8 @@ describe('ParameterComponent', () => {
 
     const inputDebugElement1 = fixture.debugElement.query(By.css('input'));
     expect(inputDebugElement1.nativeElement.type).toEqual('number');
+    expect(inputDebugElement1.nativeElement.min).toEqual('0');
+    expect(inputDebugElement1.nativeElement.max).toEqual('9');
     
     const selectDataDebugElement1 = fixture.debugElement.query(By.css('button.select-data'));
     expect(selectDataDebugElement1).toBeNull();
@@ -128,6 +130,42 @@ describe('ParameterComponent', () => {
     const unsetDebugElement3 = fixture.debugElement.query(By.css('button.unset'));
     expect(unsetDebugElement3).not.toBeNull();
 
+    // Parameter 4
+    component.parameter = parameterGroups.optional.get(group1Id).parameters[2];
+
+    fixture.detectChanges();
+
+    const nameDebugElement4 = fixture.debugElement.query(By.css('label'));
+    expect(nameDebugElement4.nativeElement.textContent).toEqual(component.parameter.name);
+
+    const inputDebugElement4 = fixture.debugElement.query(By.css('input'));
+    expect(inputDebugElement4.nativeElement.type).toEqual('number');
+    
+    const selectDataDebugElement4 = fixture.debugElement.query(By.css('button.select-data'));
+    expect(selectDataDebugElement4).toBeNull();
+
+    const unsetDebugElement4 = fixture.debugElement.query(By.css('button.unset'));
+    expect(unsetDebugElement4).not.toBeNull();
+
+    expect(inputDebugElement4.nativeElement.min).toEqual('0');
+    expect(inputDebugElement4.nativeElement.max).toEqual('' + (10 - Parameter.epsilon));
+    
+    // Parameter 5
+    component.parameter = parameterGroups.optional.get(group1Id).parameters[3];
+
+    fixture.detectChanges();
+
+    const nameDebugElement5 = fixture.debugElement.query(By.css('label'));
+    expect(nameDebugElement5.nativeElement.textContent).toEqual(component.parameter.name);
+
+    const inputDebugElement5 = fixture.debugElement.query(By.css('input'));
+    expect(inputDebugElement5.nativeElement.type).toEqual('text');
+    
+    const selectDataDebugElement5 = fixture.debugElement.query(By.css('button.select-data'));
+    expect(selectDataDebugElement5).toBeNull();
+
+    const unsetDebugElement5 = fixture.debugElement.query(By.css('button.unset'));
+    expect(unsetDebugElement5).not.toBeNull();
   });
 
 });

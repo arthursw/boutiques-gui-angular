@@ -54,10 +54,10 @@ describe('ParameterControlService', () => {
     let parameterGroup0 = parameterGroups['required'].get('0' + idPrefix + 0);
     expect(parameterGroup0).toBeDefined();
     expect(parameterGroup0.parameters[0].type).toBe('String');
-    expect(parameterGroup0.parameters[0].inputType).toBe('text');
+    expect(parameterGroup0.parameters[0].getInputType()).toBe('text');
     expect(parameterGroup0.parameters[0].value).toBe(valuePrefix + 0);
     expect(parameterGroup0.parameters[1].type).toBe('Number');
-    expect(parameterGroup0.parameters[1].inputType).toBe('number');
+    expect(parameterGroup0.parameters[1].getInputType()).toBe('number');
     expect(parameterGroup0.parameters[1].value).toBe(valuePrefix + 1);
 
     // group 1:
@@ -75,10 +75,10 @@ describe('ParameterControlService', () => {
     expect(parameterGroup1.optional).toBe(true);
     expect(parameterGroup1.exclusive).toBe(true);
     expect(parameterGroup1.parameters[0].type).toBe('File');
-    expect(parameterGroup1.parameters[0].inputType).toBe('text');
+    expect(parameterGroup1.parameters[0].getInputType()).toBe('text');
     expect(parameterGroup1.parameters[0].value).toBe(valuePrefix + 2);
     expect(parameterGroup1.parameters[1].type).toBe('Flag');
-    expect(parameterGroup1.parameters[1].inputType).toBe('checkbox');
+    expect(parameterGroup1.parameters[1].getInputType()).toBe('checkbox');
     expect(parameterGroup1.parameters[1].value).toBe(valuePrefix + 3);
   });
   

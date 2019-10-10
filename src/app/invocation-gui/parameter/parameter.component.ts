@@ -25,6 +25,10 @@ export class ParameterComponent {
   	return;
   }
 
+  displaySelectData() {
+    return this.parameter.list ? 'Add data' : 'Select data';
+  }
+
   unset() {
     let activeControl = this.formGroup.get(this.parameter.id) as FormControl;
     activeControl.markAsPristine();
